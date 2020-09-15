@@ -9,7 +9,7 @@
 import XCTest
 
 class KeyboardScreenTests: BaseTest {
-    let testPhrase = "Test"
+    let testPhrase = "Tests Main."
 
     func testWhenTyping_ThenTextShownOnOutputLabel() {
         mainScreen.keyboardNavButton.tap()
@@ -17,6 +17,24 @@ class KeyboardScreenTests: BaseTest {
        
         XCTAssert(keyboardScreen.keyboardTextView.staticTexts[testPhrase].exists, "Expected the text \(testPhrase) to be displayed")
     }
+    
+    func testBackspaceRemovesCharacter(){
+        mainScreen.keyboardNavButton.tap()
+        keyboardScreen.typeText(testPhrase)
+        
+        // Need to do this until we figure out why the indentifier is being added to the Y button
+        keyboardScreen.backspaceButton.element(boundBy: 1).tap()
+        XCTAssert(keyboardScreen.keyboardTextView.staticTexts["Test"].exists, "Expected the text Test to be displayed")
+    }
+    
+    func testClearResetsInput(){
+        mainScreen.keyboardNavButton.tap()
+        keyboardScreen.typeText(testPhrase)
+        
+        keyboardScreen.clearButton.element(boundBy: 1).tap()
+        XCTAssertFalse(keyboardScreen.keyboardTextView.staticTexts[""].exists, "Expected the text view to be empty")
+    }
+    
     /*
      // My sayings is being replaced with Custom Categories so this test will no longer apply.
     func testWhenAddingPhraseToMySayings_ThenItAppearsOnMainScreen() {

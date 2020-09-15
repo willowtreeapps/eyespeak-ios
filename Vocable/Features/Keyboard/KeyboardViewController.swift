@@ -107,14 +107,23 @@ class KeyboardViewController: UICollectionViewController {
                 cell.setup(title: char)
                 return cell
             case .keyboardFunctionButton(let functionType):
-                if functionType == .speak {
-                    let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: SpeakFunctionKeyboardKeyCollectionViewCell.reuseIdentifier, for: indexPath) as! SpeakFunctionKeyboardKeyCollectionViewCell
-                    cell.setup(with: functionType.image)
-                    return cell
+                let speakCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: SpeakFunctionKeyboardKeyCollectionViewCell.reuseIdentifier, for: indexPath) as! SpeakFunctionKeyboardKeyCollectionViewCell
+                let imageCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: KeyboardKeyCollectionViewCell.reuseIdentifier, for: indexPath) as! KeyboardKeyCollectionViewCell
+
+                switch functionType {
+                    case .speak:
+                         speakCell.setup(with: functionType.image, label: "keyboard.speakButton")
+                         return speakCell
+                    case .backspace:
+                        imageCell.setup(with: functionType.image, label: "keyboard.backspaceButton")
+                        return imageCell
+                    case .clear:
+                        imageCell.setup(with: functionType.image, label: "keyboard.clearButton")
+                        return imageCell
+                    case .space:
+                        imageCell.setup(with: functionType.image, label: "keyboard.spacebarButton")
+                        return imageCell
                 }
-                let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: KeyboardKeyCollectionViewCell.reuseIdentifier, for: indexPath) as! KeyboardKeyCollectionViewCell
-                cell.setup(with: functionType.image)
-                return cell
             }
         })
         
