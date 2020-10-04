@@ -35,7 +35,7 @@ class KeyboardKeyCollectionViewCell: VocableCollectionViewCell {
         textLabel.text = title
     }
     
-    func setup(with image: UIImage?) {
+    func setup(with image: UIImage?, label: String?) {
         guard let image = image, let font = textLabel.font else {
             return
         }
@@ -51,6 +51,7 @@ class KeyboardKeyCollectionViewCell: VocableCollectionViewCell {
         let finalAttributedString = NSAttributedString(attachment: systemImageAttachment)
         
         textLabel.attributedText = finalAttributedString
+        textLabel.accessibilityIdentifier = label
     }
 }
 
